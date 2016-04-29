@@ -25,7 +25,7 @@ class Retreat_Registration_For_Formidable_Forms_Test extends FrmUnitTest {
     	$this->assertEquals( $errors, two_fields_unique($errors, $values) );
     }
 
-    function test_two_fields_unique_related_full_form_unique_fields_should_return_existing_errors() {
+    function test_two_fields_unique_relevant_full_form_unique_fields_should_return_existing_errors() {
     	$errors = array (
     		'an_error' => 'oops',
     		);
@@ -40,6 +40,22 @@ class Retreat_Registration_For_Formidable_Forms_Test extends FrmUnitTest {
 
 
     	$this->assertEquals( $errors, two_fields_unique($errors, $values) );
-        
+
+    }
+
+    function test_two_fields_unique_relevant_full_form_fields_not_unique_returns_new_error() {
+        $errors = array (
+            'an_error' => 'oops',
+            );
+        $values = array(
+            'form_id' => 13,
+            ) ;
+        $first_field_id = 141; // registrant email
+        $second_field_id = 186; // retreat id
+
+        $_POST['item_meta'][141] = 'test@mail.com';
+        $_POST['item_meta'][186] = 100;
+
+        $this->assertTrue(false);
     }
 }

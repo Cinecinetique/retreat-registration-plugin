@@ -19,7 +19,7 @@ $ svn co http://develop.svn.wordpress.org/trunk/
 $ git clone https://github.com/Strategy11/formidable-forms.git
 ```
 * Make sure to run ```composer install``` on all projects
-* change the directory path in **bootstrap.php**
+* change the directory paths in **bootstrap.php**
 * to execute the tests:
 
 ```bash
