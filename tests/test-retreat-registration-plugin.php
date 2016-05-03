@@ -5,6 +5,7 @@
  */
 class Retreat_Registration_For_Formidable_Forms_Test extends FrmUnitTest {
  
+
     /**
      * An example test.
      *
@@ -44,18 +45,44 @@ class Retreat_Registration_For_Formidable_Forms_Test extends FrmUnitTest {
     }
 
     function test_two_fields_unique_relevant_full_form_fields_not_unique_returns_new_error() {
+        $this->my_import_xml();
+
         $errors = array (
             'an_error' => 'oops',
             );
         $values = array(
             'form_id' => 13,
             ) ;
-        $first_field_id = 141; // registrant email
-        $second_field_id = 186; // retreat id
+        $registrant_email = 141; 
+        $retreat_id = 186;
 
-        $_POST['item_meta'][141] = 'test@mail.com';
-        $_POST['item_meta'][186] = 100;
+        $_POST['item_meta'][$registrant_email] = 'test@mail.com';
+        $_POST['item_meta'][$retreat_id] = 100;
+
+        $form = $this->factory->form->get_object_by_id( 13 );
+
+        $this->assertNotNull($form);
+
+        $entry_data = $this->factory->field->generate_entry_array( $form );
+        $entry = FrmEntry::create( $entry_data );
 
         $this->assertTrue(false);
     }
+
+
+    // helper functions
+
+    static function my_install_data() {
+        return array( dirname( __FILE__ ) . '/testdata.xml' );
+    }
+
+    function my_import_xml() {
+        // install test data in older format
+        add_filter( 'frm_default_templates_files', 'Retreat_Registration_For_Formidable_Forms_Test::my_install_data' );
+        FrmXMLController::add_default_templates();
+
+        $form = FrmForm::getOne( 'contact-db12' );
+        $this->assertEquals( $form->form_key, 'contact-db12' );
+    }
+
 }

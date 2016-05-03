@@ -52,8 +52,8 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 /**
  * Sets up the Formidable test environment.
  *
- * 
- * 
+ * If testing against Formidable Pro, the Pro files need to be copied into the local checkout
+ * of Formidable forms and the composer.json needs updated to reference them
  */
 
 require '../formidable-forms/tests/bootstrap.php';
