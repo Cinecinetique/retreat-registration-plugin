@@ -53,20 +53,25 @@ class Retreat_Registration_For_Formidable_Forms_Test extends FrmUnitTest {
         $values = array(
             'form_id' => 13,
             ) ;
-        $registrant_email = 141; 
-        $retreat_id = 186;
+        $registrant_email_field = 141;
+        $retreat_id_field = 186;
 
-        $_POST['item_meta'][$registrant_email] = 'test@mail.com';
-        $_POST['item_meta'][$retreat_id] = 100;
 
-        $form = $this->factory->form->get_object_by_id( 13 );
+        $event_form = $this->factory->form->get_object_by_id( 12 );
+        $event_entry_data = $this->factory->field->generate_entry_array( $event_form );
+        $event_entry_id = FrmEntry::create( $event_entry_data );
 
-        $this->assertNotNull($form);
+        $_POST['item_meta'][$registrant_email_field] = 'test@mail.com';
+        $_POST['item_meta'][$retreat_id_field] = $event_entry_id;
 
-        $entry_data = $this->factory->field->generate_entry_array( $form );
-        $entry = FrmEntry::create( $entry_data );
+        $registration_form = $this->factory->form->get_object_by_id( 13 );
+        //var_dump($registration_form);
+        $registration_entry_data = $this->factory->field->generate_entry_array( $registration_form );
+        $registration_entry_id = FrmEntry::create( $registration_entry_data );
+        $registration_entry_id2 = FrmEntry::create( $registration_entry_data );
 
-        $this->assertTrue(false);
+        $this->assertTrue($registration_entry_id);
+        $this->assertNotTrue($registration_entry_id2);
     }
 
 
